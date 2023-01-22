@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_foreign_key_from_users_to_locations
+      author: author
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: locations
+            constraintName: fk_locations_users_id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: user_id
+            referencedTableName: users

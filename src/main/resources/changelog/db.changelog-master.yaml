@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - include:
+      file: changelog/db.migration1.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: changelog/db.migration2.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: changelog/db.migration3.yaml
+      relativeToChangelogFile: false

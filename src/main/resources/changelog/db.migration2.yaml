@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_locations
+      author: author
+      changes:
+        - createTable:
+            tableName: locations
+            columns:
+              - column:
+                  name: location_id
+                  type: varchar
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+                    unique: false
+              - column:
+                  name: user_id
+                  type: varchar
+                  constraints:
+                    nullable: false
+                    unique: false
+              - column:
+                  name: latitude
+                  type: float8
+                  constraints:
+                    nullable: false
+                    unique: false
+              - column:
+                  name: longitude
+                  type: float8
+                  constraints:
+                    nullable: false
+                    unique: false

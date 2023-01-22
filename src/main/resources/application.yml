@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/jitpay
+    username: user
+    password: password
+  liquibase:
+    change-log: classpath:/changelog/db.changelog-master.yaml
