@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
         User user = UserMapper.toEntity(userRequest);
         User createdUser = userRepository.save(user);
-        return UserMapper.toResponse(createdUser);
+        return UserMapper.toResponseWithLastLocation(createdUser);
     }
 
     @Override
@@ -35,23 +35,19 @@ public class UserServiceImpl implements UserService {
         checkInput(userRequest);
         Optional<User> user = userRepository.findById(userRequest.getUserId());
         if (user.isPresent()) {
-            return UserMapper.toResponseWithoutLocations(userRepository.save(user.get()));
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not found");
-        }
-    }
-
-    public UserResponse findById(UUID userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            return UserMapper.toResponse(user.get());
+            return UserMapper.toResponse(userRepository.save(user.get()));
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not found");
         }
     }
 
     public UserResponse findByIdWithLatestLocation(UUID userId) {
-        Optional<User> user = userRepository.findByIdWithLatestLocation(userId);
+        return userRepository.findByIdWithLatestLocation(userId)
+            .map(UserMapper::toResponseWithLastLocation).orElseGet(() -> findById(userId));
+    }
+
+    public UserResponse findById(UUID userId) {
+        Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             return UserMapper.toResponse(user.get());
         } else {

@@ -36,7 +36,7 @@ public class UserMapperTest {
     @Test
     public void userEntityToResponse() {
         User user = new User(UUID, EMAIL, FIRST_NAME, SECOND_NAME);
-        UserResponse response = UserMapper.toResponse(user);
+        UserResponse response = UserMapper.toResponseWithLastLocation(user);
 
         assertEquals(user.getUserId(), response.getUserId());
         assertEquals(user.getFirstName(), response.getFirstName());
@@ -50,7 +50,7 @@ public class UserMapperTest {
         User user = new User(UUID, EMAIL, FIRST_NAME, SECOND_NAME);
         Location location = generateLocation(UUID);
         user.setLocations(Collections.singletonList(location));
-        UserResponse response = UserMapper.toResponse(user);
+        UserResponse response = UserMapper.toResponseWithLastLocation(user);
 
         assertEquals(user.getUserId(), response.getUserId());
         assertEquals(user.getFirstName(), response.getFirstName());
