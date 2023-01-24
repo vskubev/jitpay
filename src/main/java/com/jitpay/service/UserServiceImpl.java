@@ -36,11 +36,19 @@ public class UserServiceImpl implements UserService {
 
         Optional<User> user = userRepository.findById(userRequest.getUserId());
         if (user.isPresent()) {
-            user.get().setUserId(userRequest.getUserId());
-            user.get().setFirstName(userRequest.getFirstName());
-            user.get().setSecondName(userRequest.getSecondName());
-            user.get().setEmail(userRequest.getEmail());
-            return UserMapper.toResponse(userRepository.save(user.get()));
+            User currentUser = user.get();
+            currentUser.setUserId(userRequest.getUserId());
+            currentUser.setFirstName(userRequest.getFirstName());
+            currentUser.setSecondName(userRequest.getSecondName());
+            currentUser.setEmail(userRequest.getEmail());
+            return UserMapper.toResponse(
+                userRepository.update(
+                    String.valueOf(currentUser.getUserId()),
+                    currentUser.getFirstName(),
+                    currentUser.getSecondName(),
+                    currentUser.getEmail()
+                )
+            );
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not found");
         }
@@ -56,8 +64,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserResponse findByIdWithLatestLocation(UUID userId) {
-        Optional<User> user = userRepository.findById(userId);
-        Optional<User> user1 = userRepository.findByIdWithLatestLocation(userId);
+        Optional<User> user = userRepository.findByIdWithLatestLocation(userId);
         if (user.isPresent()) {
             return UserMapper.toResponse(user.get());
         } else {
@@ -65,8 +72,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void checkEmailUniqueness(String email) {
-        if (userRepository.findByEmail(email).isPresent()) {
+    private void checkEmailUniqueness(UUID userId, String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent() && !user.get().getUserId().equals(userId)) {
             String error = String.format("The user email %s already exists", email);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, error);
         }
@@ -98,7 +106,7 @@ public class UserServiceImpl implements UserService {
             || !userRequest.getEmail().matches("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is incorrect");
         }
-        checkEmailUniqueness(userRequest.getEmail());
+        checkEmailUniqueness(userRequest.getUserId(), userRequest.getEmail());
     }
 
 }

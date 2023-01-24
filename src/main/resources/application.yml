@@ -6,3 +6,12 @@ spring:
     password: password
   liquibase:
     change-log: classpath:/changelog/db.changelog-master.yaml
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+server:
+  error:
+    include-stacktrace: ON_PARAM

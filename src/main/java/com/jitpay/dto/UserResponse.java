@@ -10,7 +10,6 @@ import java.util.UUID;
 
 @Data
 @RequiredArgsConstructor
-//@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponse {
     @NonNull

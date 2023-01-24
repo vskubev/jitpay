@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,15 +35,14 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public LocationResponse findAllLocations(LocalDateTime from, LocalDateTime to, UUID userId) {
         checkTimeFrame(from, to);
-//        checkIfUserExists(userId);
-        Optional<List<Location>> locations
+        checkIfUserExists(userId);
+        List<Location> locations
             = locationRepository.findAllByUserIdAndCreatedAtGreaterThanAndCreatedAtLessThanOrderByCreatedAt(
             userId,
             from,
             to
         );
-        return locations.map(locationList -> LocationMapper.toResponse(userId, locationList))
-            .orElseGet(() -> new LocationResponse(userId, Collections.emptyList()));
+        return LocationMapper.toResponse(userId, locations);
     }
 
     private void checkIfUserExists(UUID userId) {

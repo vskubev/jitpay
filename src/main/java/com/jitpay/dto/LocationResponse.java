@@ -13,7 +13,7 @@ public class LocationResponse {
 
     @Data
     public static class Location {
-        private final LocalDateTime createdAt;
+        private final LocalDateTime createdOn;
         private final LocationCoordinates location;
     }
 }

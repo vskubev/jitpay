@@ -1,9 +1,6 @@
 package com.jitpay.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -15,8 +12,6 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-//@SecondaryTable(name = "locations",
-//    pkJoinColumns = @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "user_id"))
 public class User {
 
     @NonNull
@@ -37,15 +32,7 @@ public class User {
     @Column(name = "second_name", nullable = false)
     private String secondName;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-//    @Where(clause = "created_at = (SELECT MAX(locations.created_at) FROM locations WHERE locations.user_id = locations.user_id)")
-//    @Where(clause = "latitude = 52.25742342295784")
     private List<Location> locations;
-
-//    @Column(name = "latitude", table = "locations")
-//    private Double latitude;
-//
-//    @Column(name = "longitude", table = "locations")
-//    private Double longitude;
 }
