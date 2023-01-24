@@ -13,18 +13,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByEmail(@NonNull String name);
 
-    @Query(nativeQuery = true,
-        value = "update users " +
-                "set email = :email, first_name = :firstName, second_name = :secondName " +
-                "where user_id = :userId " +
-                "returning user_id, email, first_name, second_name;")
-    User update(
-        @Param("userId") @NonNull String userId,
-        @Param("firstName") @NonNull String firstName,
-        @Param("secondName") @NonNull String secondName,
-        @Param("email") @NonNull String email
-    );
-
     @Query(
         "from User u join fetch u.locations l " +
         "where u.userId = :userId " +

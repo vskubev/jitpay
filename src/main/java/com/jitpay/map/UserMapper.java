@@ -37,4 +37,13 @@ public class UserMapper {
         }
         return response;
     }
+
+    public static UserResponse toResponseWithoutLocations(User user) {
+        return new UserResponse(
+            user.getUserId(),
+            user.getEmail(),
+            user.getFirstName(),
+            user.getSecondName()
+        );
+    }
 }

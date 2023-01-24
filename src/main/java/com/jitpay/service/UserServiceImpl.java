@@ -33,22 +33,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse update(UserRequest userRequest) {
         checkInput(userRequest);
-
         Optional<User> user = userRepository.findById(userRequest.getUserId());
         if (user.isPresent()) {
-            User currentUser = user.get();
-            currentUser.setUserId(userRequest.getUserId());
-            currentUser.setFirstName(userRequest.getFirstName());
-            currentUser.setSecondName(userRequest.getSecondName());
-            currentUser.setEmail(userRequest.getEmail());
-            return UserMapper.toResponse(
-                userRepository.update(
-                    String.valueOf(currentUser.getUserId()),
-                    currentUser.getFirstName(),
-                    currentUser.getSecondName(),
-                    currentUser.getEmail()
-                )
-            );
+            return UserMapper.toResponseWithoutLocations(userRepository.save(user.get()));
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not found");
         }
