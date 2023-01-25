@@ -6,7 +6,6 @@ import com.jitpay.dto.LocationResponse;
 import com.jitpay.entity.Location;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +14,6 @@ import static com.jitpay.GenerateTestDataUtils.generateLocationCoordinates;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 
-@SpringBootTest
 public class LocationMapperTest {
     private static final java.util.UUID UUID = java.util.UUID.randomUUID();
 

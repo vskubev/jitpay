@@ -41,11 +41,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public UserResponse findByIdWithLatestLocation(UUID userId) {
         return userRepository.findByIdWithLatestLocation(userId)
             .map(UserMapper::toResponseWithLastLocation).orElseGet(() -> findById(userId));
     }
 
+    @Override
     public UserResponse findById(UUID userId) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {

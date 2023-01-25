@@ -32,21 +32,21 @@ public class LocationServiceImplTest {
     private final LocationService locationService = new LocationServiceImpl(locationRepository, userService);
 
     @Test
-    public void storeTest() {
-        LocationRequest locationRequest = generateLocationRequest();
+    public void saveLocationTest() {
+        LocationRequest locationRequest = generateLocationRequest(UUID.randomUUID());
         UserResponse userResponse = UserMapper.toResponse(generateUser());
         when(userService.findById(any())).thenReturn(userResponse);
-        locationService.store(locationRequest);
+        locationService.saveLocation(locationRequest);
         verify(userService).findById(locationRequest.getUserId());
         verify(locationRepository).save(any(Location.class));
     }
 
     @Test(expected = ResponseStatusException.class)
-    public void storeUserIsNotExistTest() {
-        LocationRequest locationRequest = generateLocationRequest();
+    public void saveLocationUserIsNotExistTest() {
+        LocationRequest locationRequest = generateLocationRequest(UUID.randomUUID());
         UserResponse userResponse = UserMapper.toResponse(generateUser());
         when(userService.findById(any())).thenThrow(ResponseStatusException.class);
-        locationService.store(locationRequest);
+        locationService.saveLocation(locationRequest);
 
         verify(userService).findById(userResponse.getUserId());
         verify(locationRepository, times(0)).save(any(Location.class));
@@ -73,13 +73,13 @@ public class LocationServiceImplTest {
 
     @Test(expected = ResponseStatusException.class)
     public void checkInputLocationRequestIsNullTest() {
-        locationService.store(null);
+        locationService.saveLocation(null);
     }
 
     @Test(expected = ResponseStatusException.class)
     public void checkInputLocationIsNullTest() {
         LocationRequest locationRequest = new LocationRequest(null, null, null);
-        locationService.store(locationRequest);
+        locationService.saveLocation(locationRequest);
     }
 
     @Test(expected = ResponseStatusException.class)
@@ -89,6 +89,6 @@ public class LocationServiceImplTest {
             null,
             new LocationCoordinates(null, null)
         );
-        locationService.store(locationRequest);
+        locationService.saveLocation(locationRequest);
     }
 }

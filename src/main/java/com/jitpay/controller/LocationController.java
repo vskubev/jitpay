@@ -21,8 +21,8 @@ public class LocationController {
     }
 
     @RequestMapping(value = "/location", method = RequestMethod.POST)
-    public ResponseEntity<?> store(@RequestBody LocationRequest locationRequest) {
-        locationService.store(locationRequest);
+    public ResponseEntity<?> saveLocation(@RequestBody LocationRequest locationRequest) {
+        locationService.saveLocation(locationRequest);
         return ResponseEntity
             .status(HttpStatus.OK)
             .build();

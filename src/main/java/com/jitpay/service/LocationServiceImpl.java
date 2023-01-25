@@ -25,7 +25,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public void store(LocationRequest locationRequest) {
+    public void saveLocation(LocationRequest locationRequest) {
         checkInput(locationRequest);
         checkIfUserExists(locationRequest.getUserId());
         Location location = LocationMapper.toEntity(locationRequest);
@@ -65,7 +65,7 @@ public class LocationServiceImpl implements LocationService {
         if (locationRequest.getLocation() == null
             || locationRequest.getLocation().getLatitude() == null
             || locationRequest.getLocation().getLongitude() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "First name is incorrect");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Latitude and Longitude coordinates are required");
         }
     }
 }

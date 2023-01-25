@@ -11,7 +11,7 @@ public interface UserService {
 
     UserResponse update(UserRequest userRequest);
 
-    UserResponse findById(UUID userId);
-
     UserResponse findByIdWithLatestLocation(UUID userId);
+
+    UserResponse findById(UUID userId);
 }

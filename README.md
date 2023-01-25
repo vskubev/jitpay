@@ -40,7 +40,7 @@ Response example:
   "secondName": "Surname"
 }
 ```
-Store new location  
+Save new location  
 *POST /location*  
 ```json
 {

@@ -40,9 +40,9 @@ public class GenerateTestDataUtils {
         return user;
     }
 
-    public static LocationRequest generateLocationRequest() {
+    public static LocationRequest generateLocationRequest(UUID userId) {
         return new LocationRequest(
-            UUID.randomUUID(),
+            userId,
             LocalDateTime.now(),
             generateLocationCoordinates()
         );

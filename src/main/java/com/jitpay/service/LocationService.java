@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface LocationService {
 
-    void store(LocationRequest locationRequest);
+    void saveLocation(LocationRequest locationRequest);
 
     LocationResponse findAllLocations(LocalDateTime from, LocalDateTime to, UUID userId);
 
