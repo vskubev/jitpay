@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse create(UserRequest userRequest) {
         checkInput(userRequest);
+        checkUserIdUniqueness(userRequest.getUserId());
 
         User user = UserMapper.toEntity(userRequest);
         User createdUser = userRepository.save(user);
@@ -61,6 +62,14 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent() && !user.get().getUserId().equals(userId)) {
             String error = String.format("The user email %s already exists", email);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, error);
+        }
+    }
+
+    private void checkUserIdUniqueness(UUID userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            String error = String.format("The user id %s already exists", userId);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, error);
         }
     }
